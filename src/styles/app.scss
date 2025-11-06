@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "aristote";
+    src: url(../assets/fonts/ARISTOTLE\ Regular.otf);
+}
+@font-face {
+    font-family: "objectOrange";
+    src: url(../assets/fonts/Objectorange.otf);
+}
+@font-face {
+    font-family: "tescaro";
+    src: url(../assets/fonts/Tescaro_Normal.ttf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "tescaro";
+}
