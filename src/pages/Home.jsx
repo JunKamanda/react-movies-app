@@ -1,9 +1,19 @@
 import React from 'react';
+import Header from '../components/Header';
+import Form from '../components/Form';
+import Card from '../components/Card';
 
 const Home = () => {
+    //State
+
+    //Comportement
+
+    //Render
     return (
         <div>
-            <h1>Home</h1>
+            <Header />
+            <Form />
+            <Card />
         </div>
     );
 };
