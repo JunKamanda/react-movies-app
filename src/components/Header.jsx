@@ -12,8 +12,11 @@ const Header = () => {
     <HeaderStyled>
       <div className="nav">
         <ul>
-          <NavLink to="/">
-            <li className="active">Accueil</li>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            <li>Accueil</li>
           </NavLink>
           <NavLink to="/favorite">
             <li>Coup de Coeur</li>
@@ -47,24 +50,27 @@ const HeaderStyled = styled.header`
 
       li {
         color: #fff;
-        padding: 5px;
+        padding: 5px 10px;
         border-radius: 10px;
-        font-size: .5rem;
-
-        &.active {
-          background: #25004e;
-        }
-        &:hover {
-          background: #24004e61;
-        }
+        font-size: .6rem;
       }
     }
+
+    /* ACTIVE STYLE DU NAVLINK */
+    .active li {
+      background: #25004e;
+    }
+
+    a:hover li {
+      background: #24004e61;
+    }
   }
+
   .title {
     width: 55%;
     text-align: end;
 
-    h1{
+    h1 {
       font-size: 1.5rem;
       font-family: "aristote";
     }
