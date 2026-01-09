@@ -11,6 +11,7 @@
   src: url(../assets/fonts/Tescaro_Normal.ttf);
 }
 
+<<<<<<< HEAD
 * {
   margin: 0;
   padding: 0;
@@ -30,3 +31,22 @@ a{
     text-decoration: none;
     color: #fff;
 }
+=======
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "tescaro";
+}
+body{
+    text-align: center;
+    margin: 0 30px;
+    background: #20001ce5;
+    color: #fff;
+}
+li, a{
+    list-style-type: none;
+    text-decoration: none;
+    font-family: "aristote";
+}
+>>>>>>> 31f42f9a7777b41c432a698a5dd79a8f99e8d71d
