@@ -29,7 +29,7 @@ export default Form;
 //-----------------------------------------
 
 const FormStyled = styled.div`
-  margin: 20px 0;
+  margin: 0px 0 20px;
   form {
     display: flex;
     justify-content: center;
@@ -44,8 +44,7 @@ const FormStyled = styled.div`
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
       outline: none;
-      font-family: "tescaro";
-          font-size: 1rem;
+        font-size: 1rem;
     }
     button {
       padding: 5px 10px;
