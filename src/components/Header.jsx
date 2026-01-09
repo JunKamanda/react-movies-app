@@ -48,6 +48,7 @@ const Navbar = styled.nav`
         padding: 5px 10px;
         border-radius: 5px;
         transition: .3s all ease-in;
+        font-size: 1.1rem;
 
         &:hover{
           background: #939393;

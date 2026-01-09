@@ -1,19 +1,30 @@
 @font-face {
-    font-family: "aristote";
-    src: url(../assets/fonts/ARISTOTLE\ Regular.otf);
+  font-family: "aristote";
+  src: url(../assets/fonts/ARISTOTLE\ Regular.otf);
 }
 @font-face {
-    font-family: "objectOrange";
-    src: url(../assets/fonts/Objectorange.otf);
+  font-family: "objectOrange";
+  src: url(../assets/fonts/Objectorange.otf);
 }
 @font-face {
-    font-family: "tescaro";
-    src: url(../assets/fonts/Tescaro_Normal.ttf);
+  font-family: "tescaro";
+  src: url(../assets/fonts/Tescaro_Normal.ttf);
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "tescaro";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "tescaro";
+    text-align: center;
+}
+body {
+  background: #0d0d0d;
+  color: #fff;
+  padding: 40px;
+}
+li, a{
+    list-style: none;
+    text-decoration: none;
+    color: #fff;
 }
