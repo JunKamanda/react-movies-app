@@ -18,6 +18,10 @@ const Form = () => {
         />
         <button type="submit">Rechercher</button>
       </form>
+      <div className="filter">
+        <button className="top">Top 👆🏾👆</button>
+        <button className="down">Flop 👇👇🏾</button>
+      </div>
     </FormStyled>
   );
 };
@@ -35,27 +39,56 @@ const FormStyled = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 0 0 15px;
 
     input {
       padding: 5px;
       text-align: center;
       border: none;
-      width: 300px;
-      border-top-right-radius: 10px;
-      border-top-left-radius: 10px;
+      width: 500px;
+      border-radius: 3px;
       outline: none;
         font-size: 1rem;
     }
     button {
       padding: 5px 10px;
-      background: #25004e;
+      background: #b90060;
       color: #fff;
       border: none;
-      width: 300px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
+      width: 500px;
       cursor: pointer;
-          font-size: 1rem;
+      font-size: 1rem;
+      box-shadow: inset 0px 0px 20px 0px #000000;
+      transition: 0.3s all ease-in;
+
+      &:hover{
+        background: #ff0084;
+      }
     }
   }
+  .filter {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 40px;
+
+    button{
+      padding: 7px 20px;
+      background: #b90060;
+      box-shadow: inset 0px 0px 20px 0px #000000;
+      transition: 0.3s all ease-in;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+
+        &:first-child:hover{
+        background: #ff0084;
+        transform: translateY(-2px);
+      }
+        &:last-child:hover{
+        background: #ff0084;
+        transform: translateY(2px);
+      }
+  }
+}
 `;

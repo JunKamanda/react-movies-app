@@ -22,7 +22,7 @@ const Header = () => {
       </div>
       <div className="title">
         <img src="./src/assets/play.png" alt="" />
-        <h1>React Movies</h1>
+        <h1><span>R</span>eact <span>M</span>ovies</h1>
       </div>
     </Navbar>
   );
@@ -49,9 +49,10 @@ const Navbar = styled.nav`
         border-radius: 5px;
         transition: .3s all ease-in;
         font-size: 1.1rem;
+        box-shadow: inset 0px 0px 20px 0px #000000;
 
         &:hover{
-          background: #939393;
+          background: #ff0084;
         }
       }
     }
@@ -69,6 +70,13 @@ const Navbar = styled.nav`
     h1{
       font-family: aristote;
       font-size: 1.3rem;
+
+    }
+    span{
+      color: #ff0084;
+      text-shadow: 0px 8px 5px #fff;
+      box-shadow: inset 0px 0px 20px 0px #000000;
+      font-size: 2.2rem;
     }
   }
 `
