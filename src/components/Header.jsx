@@ -32,24 +32,29 @@ export default Header;
 
 const Navbar = styled.nav`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  padding: 2px 0 50px;
+  justify-content: center;
+
+  gap: clamp(12px, 4vw, 50px);
+  padding: 10px 0 30px;
 
   .nav{
-
+        flex: 1 1 260px;
+    display: flex;
+    justify-content: center;
     ul{
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(8px, 3vw, 20px);
 
       li{
-        padding: 5px 10px;
-        border-radius: 5px;
-        transition: .3s all ease-in;
-        font-size: 1.1rem;
-        box-shadow: inset 0px 0px 20px 0px #000000;
+      padding: 6px 14px;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    border-radius: 6px;
+    box-shadow: inset 0 0 20px #000;
+    transition: 0.3s;
 
         &:hover{
           background: #ff0084;
@@ -58,25 +63,27 @@ const Navbar = styled.nav`
     }
   }
   .title{
+    flex: 1 1 260px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    text-align: center;
 
     img{
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
+    width: clamp(28px, 6vw, 40px);
+    height: auto;
     }
     h1{
       font-family: aristote;
-      font-size: 1.3rem;
+    font-size: clamp(1rem, 3vw, 1.3rem);
 
     }
     span{
       color: #ff0084;
       text-shadow: 0px 8px 5px #fff;
       box-shadow: inset 0px 0px 20px 0px #000000;
-      font-size: 2.2rem;
+      font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
   }
 `

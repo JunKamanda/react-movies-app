@@ -45,7 +45,7 @@ const FormStyled = styled.div`
       padding: 5px;
       text-align: center;
       border: none;
-      width: 500px;
+      width: min(90%, 500px);
       border-radius: 3px;
       outline: none;
         font-size: 1rem;
@@ -55,7 +55,7 @@ const FormStyled = styled.div`
       background: #b90060;
       color: #fff;
       border: none;
-      width: 500px;
+      width: min(90%, 500px);
       cursor: pointer;
       font-size: 1rem;
       box-shadow: inset 0px 0px 20px 0px #000000;
@@ -68,9 +68,10 @@ const FormStyled = styled.div`
   }
   .filter {
     display: flex;
+    flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    gap: 40px;
+    gap: 16px;
 
     button{
       padding: 7px 20px;
