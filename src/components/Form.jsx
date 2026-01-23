@@ -12,7 +12,7 @@ const Form = () => {
   return (
     <div>
     <FormStyled>
-      <form action="submit">
+      <form onSubmit={e=>e.preventDefault()}>
         <input
           type="text"
           name="search"
@@ -27,7 +27,7 @@ const Form = () => {
         <button className="down">Flop 👇👇🏾</button>
       </div>
     </FormStyled>
-    <Card />
+    <Card search={search} />
     </div>
   );
 };
