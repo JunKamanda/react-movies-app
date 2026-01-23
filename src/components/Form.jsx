@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Card from "./Card";
 
 const Form = () => {
   //State
+  const [search, setSearch] = useState("code");
 
   //Comportement
 
   //Render
   return (
+    <div>
     <FormStyled>
       <form action="submit">
         <input
@@ -15,6 +18,7 @@ const Form = () => {
           name="search"
           id="search"
           placeholder="Nom du film"
+          onChange={e=>setSearch(e.target.value)}
         />
         <button type="submit">Rechercher</button>
       </form>
@@ -23,6 +27,8 @@ const Form = () => {
         <button className="down">Flop 👇👇🏾</button>
       </div>
     </FormStyled>
+    <Card />
+    </div>
   );
 };
 
