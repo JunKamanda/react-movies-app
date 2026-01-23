@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Card from "./Card";
 
 const Form = () => {
-  //State
+  //STATE
   const [search, setSearch] = useState("code");
+  const [sortType, setSortType] = useState(null);
 
-  //Comportement
 
-  //Render
+  //COMPORTEMENT
+
+  //RENDER
   return (
     <div>
     <FormStyled>
@@ -23,11 +25,11 @@ const Form = () => {
         <button type="submit">Rechercher</button>
       </form>
       <div className="filter">
-        <button className="top">Top 👆🏾👆</button>
-        <button className="down">Flop 👇👇🏾</button>
+        <button className="top" onClick={()=>setSortType("badToGood")}>Top 👆🏾👆</button>
+        <button className="down" onClick={()=>setSortType("goodToBad")}>Flop 👇👇🏾</button>
       </div>
     </FormStyled>
-    <Card search={search} />
+    <Card search={search} sortType={sortType} />
     </div>
   );
 };

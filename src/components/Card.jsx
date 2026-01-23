@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Card = ({ search }) => {
+const Card = ({ search, sortType }) => {
   //STATE
   const [movies, setMovies] = useState([]);
 
@@ -22,7 +22,7 @@ const Card = ({ search }) => {
   }, [search]);
 
   //Genre Map
-    const genreMap = {
+  const genreMap = {
     28: "Action",
     12: "Aventure",
     16: "Animation",
@@ -53,35 +53,43 @@ const Card = ({ search }) => {
   return (
     <CardContainer>
       <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            {movie.backdrop_path ? (
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                alt={movie.original_title}
-              />
-            ) : (
-              <img
-                src="./src/assets/movieTitle.jpeg"
-                alt={movie.original_title}
-              />
-            )}
-            <h3>{movie.title}</h3>
-            {movie.release_date ? (
-              <p className="release_date">
-                Sorti le : {dateFormater(movie.release_date)}
-              </p>
-            ) : null}
-            <p className="star">Note : {movie.vote_average}/10 ✨</p>
-            <div className="genre">
-              {movie.genre_ids.map((id) => (
-                <span key={id}>{genreMap[id]} </span>
-              ))}
-            </div>
-            <h3>{movie.overview}</h3>
-            <button>Ajouter aux coups de coeur</button>
-          </li>
-        ))}
+        {movies
+          .sort((a, b) => {
+            if (sortType === "goodToBad"){
+            return a.vote_average - b.vote_average;
+            } else if (sortType === "badToGood"){
+              return b.vote_average - a.vote_average;
+            }
+          })
+          .map((movie) => (
+            <li key={movie.id}>
+              {movie.backdrop_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                  alt={movie.original_title}
+                />
+              ) : (
+                <img
+                  src="./src/assets/movieTitle.jpeg"
+                  alt={movie.original_title}
+                />
+              )}
+              <h3>{movie.title}</h3>
+              {movie.release_date ? (
+                <p className="release_date">
+                  Sorti le : {dateFormater(movie.release_date)}
+                </p>
+              ) : null}
+              <p className="star">Note : {movie.vote_average}/10 ✨</p>
+              <div className="genre">
+                {movie.genre_ids.map((id) => (
+                  <span key={id}>{genreMap[id]} </span>
+                ))}
+              </div>
+              <h3>{movie.overview}</h3>
+              <button>Ajouter aux coups de coeur</button>
+            </li>
+          ))}
       </ul>
     </CardContainer>
   );
