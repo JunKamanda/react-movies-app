@@ -2,9 +2,26 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Card = () => {
-  //State
+const Card = ({ search, sortType }) => {
+  //STATE
   const [movies, setMovies] = useState([]);
+
+  //COMPORTEMENT
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=ed82f4c18f2964e75117c2dc65e2161d&query=${search}&language=fr-FR`,
+      )
+      .then((res) => {
+        setMovies(res.data.results || []);
+        console.log(res.data.results);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération :", error);
+      });
+  }, [search]);
+
+  //Genre Map
   const genreMap = {
     28: "Action",
     12: "Aventure",
@@ -27,43 +44,52 @@ const Card = () => {
     37: "Western",
   };
 
-  //Comportement
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=ed82f4c18f2964e75117c2dc65e2161d&query=code&language=fr-FR`,
-      )
-      .then((res) => {
-        setMovies(res.data.results || []);
-        console.log(res.data.results);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération :", error);
-      });
-  }, []);
+  const dateFormater = (date) => {
+    let [year, month, day] = date.split("-");
+    return [year, month, day].join("/");
+  };
 
-  //Render
+  //RENDER
   return (
     <CardContainer>
       <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-              alt={movie.original_title}
-            />
-            <h3>{movie.title}</h3>
-            <p className="release_date">{movie.release_date}</p>
-            <p className="star">{movie.vote_average}/10 ✨</p>
-            <div className="genre">
-              {movie.genre_ids.map((id) => (
-                <span key={id}>{genreMap[id]} </span>
-              ))}
-            </div>
-            <h3>{movie.overview}</h3>
-            <button>Ajouter aux coups de coeur</button>
-          </li>
-        ))}
+        {movies
+          .sort((a, b) => {
+            if (sortType === "goodToBad"){
+            return a.vote_average - b.vote_average;
+            } else if (sortType === "badToGood"){
+              return b.vote_average - a.vote_average;
+            }
+          })
+          .map((movie) => (
+            <li key={movie.id}>
+              {movie.backdrop_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                  alt={movie.original_title}
+                />
+              ) : (
+                <img
+                  src="./src/assets/movieTitle.jpeg"
+                  alt={movie.original_title}
+                />
+              )}
+              <h3>{movie.title}</h3>
+              {movie.release_date ? (
+                <p className="release_date">
+                  Sorti le : {dateFormater(movie.release_date)}
+                </p>
+              ) : null}
+              <p className="star">Note : {movie.vote_average}/10 ✨</p>
+              <div className="genre">
+                {movie.genre_ids.map((id) => (
+                  <span key={id}>{genreMap[id]} </span>
+                ))}
+              </div>
+              <h3>{movie.overview}</h3>
+              <button>Ajouter aux coups de coeur</button>
+            </li>
+          ))}
       </ul>
     </CardContainer>
   );

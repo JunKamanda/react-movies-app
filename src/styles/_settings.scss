@@ -11,20 +11,32 @@
   src: url(../assets/fonts/Tescaro_Normal.ttf);
 }
 
+$font-1 : "aristote", sans-serif;
+$font-2 : "objectOrange", sans-serif;
+$font-3 : "tescaro", sans-serif;
+
+$color-1 : #b90060;
+$color-2 : #ff0084;
+$black : #0d0d0d;
+$white : #ffffff;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "tescaro";
+  font-family: $font-3;
     text-align: center;
 }
 body {
-  background: #0d0d0d;
-  color: #fff;
+  background: $black;
+  color: $white;
   padding: 40px;
 }
 li, a{
     list-style: none;
     text-decoration: none;
-    color: #fff;
+    color: $white;
+}
+img{
+  object-fit: contain;
 }
