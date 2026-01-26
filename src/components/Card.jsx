@@ -44,6 +44,21 @@ const Card = ({ search, sortType }) => {
     37: "Western",
   };
 
+  //Store Data in Local Storage
+
+  const storeData = (id) => {
+    let storedData = localStorage.getItem("movies");
+
+    storedData = storedData ? storedData.split(",") : [];
+
+    if (!storedData.includes(id.toString())) {
+      storedData.push(id.toString());
+      localStorage.setItem("movies", storedData.join(","));
+      alert("Film ajouté aux coups de coeur !");
+    }
+  };
+
+  //Date Formater
   const dateFormater = (date) => {
     let [year, month, day] = date.split("-");
     return [year, month, day].join("/");
@@ -55,9 +70,9 @@ const Card = ({ search, sortType }) => {
       <ul>
         {movies
           .sort((a, b) => {
-            if (sortType === "goodToBad"){
-            return a.vote_average - b.vote_average;
-            } else if (sortType === "badToGood"){
+            if (sortType === "goodToBad") {
+              return a.vote_average - b.vote_average;
+            } else if (sortType === "badToGood") {
               return b.vote_average - a.vote_average;
             }
           })
@@ -87,7 +102,9 @@ const Card = ({ search, sortType }) => {
                 ))}
               </div>
               <h3>{movie.overview}</h3>
-              <button>Ajouter aux coups de coeur</button>
+              <p className="addbutton" onClick={() => storeData(movie.id)}>
+                Ajouter aux coups de coeur
+              </p>
             </li>
           ))}
       </ul>
@@ -113,7 +130,7 @@ const CardContainer = styled.div`
 
     li {
       position: relative;
-      flex: 0 1 260px; // largeur fixe
+      flex: 0 1 260px;
       height: auto;
       padding: 20px;
       background: linear-gradient(180deg, #ff0084, #080c28);
@@ -191,7 +208,7 @@ const CardContainer = styled.div`
         backdrop-filter: blur(4px);
       }
 
-      button {
+      .addbutton {
         position: absolute;
         left: 50%;
         bottom: 14px;
