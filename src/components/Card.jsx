@@ -5,6 +5,8 @@ import styled from "styled-components";
 const Card = ({ search, sortType, moviesData }) => {
   //STATE
   const [movies, setMovies] = useState([]);
+  const [addedIds, setAddedIds] = useState([]);
+
 
   //COMPORTEMENT
   useEffect(() => {
@@ -22,6 +24,11 @@ const Card = ({ search, sortType, moviesData }) => {
         console.error("Erreur lors de la récupération :", error);
       });
   }, [search]);
+
+  useEffect(() => {
+  const stored = localStorage.getItem("movies");
+  setAddedIds(stored ? stored.split(",").map(Number) : []);
+}, []);
 
   //Genre Map
   const genreMap = {
@@ -55,15 +62,17 @@ const Card = ({ search, sortType, moviesData }) => {
     if (!storedData.includes(id.toString())) {
       storedData.push(id.toString());
       localStorage.setItem("movies", storedData.join(","));
-      alert("Film ajouté aux coups de coeur !");
+
+      setAddedIds((prev) => [...prev, id]);
     }
   };
 
   const deleteData = (idTodelete) => {
-    let storedData = localStorage.movies.split(",");
-    let newData = storedData.filter((id) => id != idTodelete);
+    // let storedData = localStorage.movies.split(",");
+    let newData = addedIds.filter((id) => id != idTodelete);
 
-    localStorage.movies = newData;
+    setAddedIds(newData);
+    localStorage.setItem("movies", newData.join(","));
   };
 
   //Date Formater
@@ -115,7 +124,7 @@ const Card = ({ search, sortType, moviesData }) => {
               <h3>{movie.overview}</h3>
               {movie.genre_ids ? (
                 <p className="addbutton" onClick={() => storeData(movie.id)}>
-                  Ajouter aux coups de coeur
+                  Ajouter aux coups de coeur {addedIds.includes(movie.id) && "✅"}
                 </p>
               ) : (
                 <p
