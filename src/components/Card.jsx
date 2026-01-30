@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Card = ({ search, sortType }) => {
+const Card = ({ search, sortType, moviesData }) => {
   //STATE
   const [movies, setMovies] = useState([]);
 
   //COMPORTEMENT
   useEffect(() => {
+    if (!search) return;
+
     axios
       .get(
         `https://api.themoviedb.org/3/search/movie?api_key=ed82f4c18f2964e75117c2dc65e2161d&query=${search}&language=fr-FR`,
@@ -45,7 +47,6 @@ const Card = ({ search, sortType }) => {
   };
 
   //Store Data in Local Storage
-
   const storeData = (id) => {
     let storedData = localStorage.getItem("movies");
 
@@ -63,12 +64,13 @@ const Card = ({ search, sortType }) => {
     let [year, month, day] = date.split("-");
     return [year, month, day].join("/");
   };
+  const displayedMovies = moviesData ? moviesData : movies;
 
   //RENDER
   return (
     <CardContainer>
       <ul>
-        {movies
+        {displayedMovies
           .sort((a, b) => {
             if (sortType === "goodToBad") {
               return a.vote_average - b.vote_average;
@@ -97,9 +99,11 @@ const Card = ({ search, sortType }) => {
               ) : null}
               <p className="star">Note : {movie.vote_average}/10 ✨</p>
               <div className="genre">
-                {movie.genre_ids.map((id) => (
-                  <span key={id}>{genreMap[id]} </span>
-                ))}
+                {(movie.genre_ids || movie.genres?.map((g) => g.id))?.map(
+                  (id) => (
+                    <span key={id}>{genreMap[id]} </span>
+                  ),
+                )}
               </div>
               <h3>{movie.overview}</h3>
               <p className="addbutton" onClick={() => storeData(movie.id)}>
