@@ -2,12 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Card = ({ search, sortType }) => {
+const Card = ({ search, sortType, moviesData }) => {
   //STATE
   const [movies, setMovies] = useState([]);
+  const [addedIds, setAddedIds] = useState([]);
+
 
   //COMPORTEMENT
   useEffect(() => {
+    if (!search) return;
+
     axios
       .get(
         `https://api.themoviedb.org/3/search/movie?api_key=ed82f4c18f2964e75117c2dc65e2161d&query=${search}&language=fr-FR`,
@@ -20,6 +24,11 @@ const Card = ({ search, sortType }) => {
         console.error("Erreur lors de la récupération :", error);
       });
   }, [search]);
+
+  useEffect(() => {
+  const stored = localStorage.getItem("movies");
+  setAddedIds(stored ? stored.split(",").map(Number) : []);
+}, []);
 
   //Genre Map
   const genreMap = {
@@ -44,20 +53,44 @@ const Card = ({ search, sortType }) => {
     37: "Western",
   };
 
+  //Store Data in Local Storage
+  const storeData = (id) => {
+    let storedData = localStorage.getItem("movies");
+
+    storedData = storedData ? storedData.split(",") : [];
+
+    if (!storedData.includes(id.toString())) {
+      storedData.push(id.toString());
+      localStorage.setItem("movies", storedData.join(","));
+
+      setAddedIds((prev) => [...prev, id]);
+    }
+  };
+
+  const deleteData = (idTodelete) => {
+    // let storedData = localStorage.movies.split(",");
+    let newData = addedIds.filter((id) => id != idTodelete);
+
+    setAddedIds(newData);
+    localStorage.setItem("movies", newData.join(","));
+  };
+
+  //Date Formater
   const dateFormater = (date) => {
     let [year, month, day] = date.split("-");
     return [year, month, day].join("/");
   };
+  const displayedMovies = moviesData ? moviesData : movies;
 
   //RENDER
   return (
     <CardContainer>
       <ul>
-        {movies
+        {displayedMovies
           .sort((a, b) => {
-            if (sortType === "goodToBad"){
-            return a.vote_average - b.vote_average;
-            } else if (sortType === "badToGood"){
+            if (sortType === "goodToBad") {
+              return a.vote_average - b.vote_average;
+            } else if (sortType === "badToGood") {
               return b.vote_average - a.vote_average;
             }
           })
@@ -80,14 +113,30 @@ const Card = ({ search, sortType }) => {
                   Sorti le : {dateFormater(movie.release_date)}
                 </p>
               ) : null}
-              <p className="star">Note : {movie.vote_average}/10 ✨</p>
+              <p className="star">Note : {movie.vote_average.toFixed(1)}/10 ✨</p>
               <div className="genre">
-                {movie.genre_ids.map((id) => (
-                  <span key={id}>{genreMap[id]} </span>
-                ))}
+                {(movie.genre_ids || movie.genres?.map((g) => g.id))?.map(
+                  (id) => (
+                    <span key={id}>{genreMap[id]} </span>
+                  ),
+                )}
               </div>
               <h3>{movie.overview}</h3>
-              <button>Ajouter aux coups de coeur</button>
+              {movie.genre_ids ? (
+                <p className="addbutton" onClick={() => storeData(movie.id)}>
+                  Ajouter aux coups de coeur {addedIds.includes(movie.id) && "✅"}
+                </p>
+              ) : (
+                <p
+                  className="addbutton"
+                  onClick={() => {
+                    deleteData(movie.id);
+                    window.location.reload();
+                  }}
+                >
+                  Supprimer aux coups de coeur
+                </p>
+              )}
             </li>
           ))}
       </ul>
@@ -113,7 +162,7 @@ const CardContainer = styled.div`
 
     li {
       position: relative;
-      flex: 0 1 260px; // largeur fixe
+      flex: 0 1 260px;
       height: auto;
       padding: 20px;
       background: linear-gradient(180deg, #ff0084, #080c28);
@@ -191,7 +240,7 @@ const CardContainer = styled.div`
         backdrop-filter: blur(4px);
       }
 
-      button {
+      .addbutton {
         position: absolute;
         left: 50%;
         bottom: 14px;
