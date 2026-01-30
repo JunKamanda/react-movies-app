@@ -59,6 +59,13 @@ const Card = ({ search, sortType, moviesData }) => {
     }
   };
 
+  const deleteData = (idTodelete) => {
+    let storedData = localStorage.movies.split(",");
+    let newData = storedData.filter((id) => id != idTodelete);
+
+    localStorage.movies = newData;
+  };
+
   //Date Formater
   const dateFormater = (date) => {
     let [year, month, day] = date.split("-");
@@ -97,7 +104,7 @@ const Card = ({ search, sortType, moviesData }) => {
                   Sorti le : {dateFormater(movie.release_date)}
                 </p>
               ) : null}
-              <p className="star">Note : {movie.vote_average}/10 ✨</p>
+              <p className="star">Note : {movie.vote_average.toFixed(1)}/10 ✨</p>
               <div className="genre">
                 {(movie.genre_ids || movie.genres?.map((g) => g.id))?.map(
                   (id) => (
@@ -106,9 +113,21 @@ const Card = ({ search, sortType, moviesData }) => {
                 )}
               </div>
               <h3>{movie.overview}</h3>
-              <p className="addbutton" onClick={() => storeData(movie.id)}>
-                Ajouter aux coups de coeur
-              </p>
+              {movie.genre_ids ? (
+                <p className="addbutton" onClick={() => storeData(movie.id)}>
+                  Ajouter aux coups de coeur
+                </p>
+              ) : (
+                <p
+                  className="addbutton"
+                  onClick={() => {
+                    deleteData(movie.id);
+                    window.location.reload();
+                  }}
+                >
+                  Supprimer aux coups de coeur
+                </p>
+              )}
             </li>
           ))}
       </ul>
